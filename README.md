@@ -1,1 +1,1 @@
-# ABAP-Study
+# ABAP 교육일정
