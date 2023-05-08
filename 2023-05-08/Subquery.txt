@@ -35,3 +35,5 @@ SELECT SINGLE carrid connid paymentsum
   AND a~carrid = 'AA'.
 
 WRITE: gv_carrid, gv_connid, gv_paymentsum.
+
+  update : ABAP Study Day 4 Open SQL Data Read
