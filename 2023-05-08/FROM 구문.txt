@@ -1,0 +1,30 @@
+3 FROM 구문
+	FROM 구문은 데이터를 SELECT 할 대상 테이블을 지정한다.
+	FROM 구문 다음에는 하나의 테이블을 지정하거나 여러 개의 테이블을 JOIN 할 수 있다.
+	Alias를 사용해서 테이블 명에 별명을 붙일 수 있으며 테이블 이름을 동적으로 선언할 수 있다.
+	From 구문은 Table을 정의하는 부분과 데이터베이스 접근을 컨트롤하는 부분(Option)으로 나누어진다.
+	
+	Ex)
+		SELECT ... FROM table option ...
+		
+	FROM 구문에서 사용할 수 있는 옵션은 다음과 같다.
+	
+	구문								설명
+	CLIENT SPECIFIED				자동 client 설정을 해제한다.
+	BYPASSING BUFFER				SAP Local Buffer에서 값을 읽지 않음.
+									테이블이 Buffering이 설정되어 있더라도 바로 데이터베이스 테이블에서 SELECT를 수행함.
+	UP TO n ROWS					SELECT의 row 갯수 제한. 조회 조건에 날짜를 입력하지 않는 것과 같은 사용자 실수로 대량의 데이터를 요청할 때
+									데이터베이스 성능 저하를 예방할 수 있다.
+									
+3.1 정적인 TABLE 선택
+	SELECT ... FROM <dbtab> [AS <alias>] <options>
+	
+3.2 동적인 TABLE 선택
+	SELECT ... FROM (dbtab).
+
+3.3 JOIN 구문
+	관계형 데이터베이스에서 여러 개의 테이블 값을 동시에 읽어 올 경우 JOIN을 사용하게 된다.
+	일반적으로 Primary Key 와 Foreing Key를 사용해서 JOIN 하는 경우가 대부분이지만 때로는 논리적인 값들의 연관으로 JOIN 하는 경우도 있다.
+	두 테이블 간의 연결 조건은 ON 구문을 사용한다. JOIN에 사용되는 필드가 인덱스에 존재할 댸 빠른 성능이 보장된다.
+	
+	
