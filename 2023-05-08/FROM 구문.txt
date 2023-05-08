@@ -27,4 +27,28 @@
 	일반적으로 Primary Key 와 Foreing Key를 사용해서 JOIN 하는 경우가 대부분이지만 때로는 논리적인 값들의 연관으로 JOIN 하는 경우도 있다.
 	두 테이블 간의 연결 조건은 ON 구문을 사용한다. JOIN에 사용되는 필드가 인덱스에 존재할 댸 빠른 성능이 보장된다.
 	
+	ABAP 프로그램에서는 테이블 간의 JOIN 을 하기보다 인터널 테이블에 데이터를 저장하고 나서 LOOP 구문을 이용해서
+	추가 정보를 SELECT 해서 인터널 테이블 내용을 MODIFY 하는 경우가 많음.
+			-> 일반적인 RDBMS랑 좀 다름..
+			*책에서의 추가 설명*
+				-> 이 행위는 데이터베이스 입장에서 보면 아주 좋지 않은 습관
+				   프로그램의 부하 주요 원인 중 하나는 저장장치에 저장된 데이터를 빈번하게 접근하는 것
+				   이 경우 LOOP를 수행하면서 데이터베이스에 반복적으로 접근하게 됨
+				   물론 ABAP 언어에는 다른 언어에 존재하지 않는 인터널 테이블이 존재하고, OPEN SQL의 제한된
+				   기능 때문에 어쩔 수 없이 LOOP 처리를 해야 하는 경우가 발생
+				   그러나 JOIN이 가능한 경우라면 될 수 있으면 JOIN을 사용하도록 하자
+3.4 INNER JOIN과 OUTER JOIN
+	JOIN의 종류에는 크게 INNER JOIN과 OUTER JOIN 두 가지가 있으며, OUTER JOIN은 다음 구문과 같이 사용한다.
 	
+	SELECT...FROM <tab> LEFT [OUTER] JOIN <dbtab>
+											[AS <alias>]
+											ON <cond>
+		<options>
+
+3.5 Line 수 제한
+	다음 구문을 이용해서 테이블에서 읽어오는 라인 수를 제한한다.
+	
+	SELECT ...FROM <tab> UP TO <n> ROWS ...
+	
+		리포트 프로그램의 조회 조건인 SELECTION SCREEN 에서 최대 적중 수를 제한하는 목적으로 많이 사용
+		(서버 부하 방지)		
