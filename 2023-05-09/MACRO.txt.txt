@@ -1,0 +1,8 @@
+MACRO
+	1. Local MACRO
+	프로그램에서 같은 구문을 여러 번 사용해야 한다면, MACRO에 포함하는 것이 바람직하다. 프로그램 선언부에 DEFINE ~ END-OF-DEFINITION을 선언하고 나서
+	MACRO이름과 파라미터로 호출하면 된다. PERFORM 구문이 로직에 포함된 재사용 모듈이라면, MACRO는 단순한 코딩 반복을 감소하려는 것이라고 할 수 있다.
+	
+	DEFINE macro.
+	~~~
+	END-OF-DEFINITION.
