@@ -1,0 +1,18 @@
+RFC
+	레거시와 R/3 시스템의 데이터를 인터페이스 하려면 R/3의 함수가 RFC 함수로 정의되어야 한다.
+	SAP ERP를 도입하기 전 기업에서는 재무, 인사, 생산 등의 시스템이 각각 개별언어 C, JAVA, 파워빌더로 구축되어 있던 것이 일반적이다.
+	이러한 레거시 시스템들은 ERP를 도입하면서 대부분 사장되었지만, SAP와 병행해서 운영되는 시스템들도 존재하게 된다.
+	
+	이 경우 레거시의 데이터를 SAP에 전달하거나, SAP 데이터를 게러시에서 조회해야 하는데 SAP RFC를 통해서 이러한 작업을 수행하게 된다.
+	다양한 언어로 개발된 레거시 시스템과 SAP를 인터페이스 하려면 RFC만으로는 구현하기가 복잡하고 어려울 수가 있다. 이 문제를 해결하기 위해 WEBMETHODS를 구현해서
+	교환원 구실을 하도록 한다.
+	
+	SAP 담당자는 RFC 함수를 이용해서 데이터를 EXPORT하고 WEBMETHODS가 데이터를 받아서 레거시로 전달해 준다. 이와 마찬가지로 WEBMETHODS는 레거시에 데이터를
+	받아서 SAP로 전달하는 역할도 수행하게 된다.
+	
+	Function 속성 중 Remote-enabled Module을 선택하면, 다른 시스템 또는 다른 애플리케이션에서 SAP FUNCTION을 호출할 수 있다. RFC의 정확한
+	의미는 CPI-C에 기초한 시스템 간의 Communication 프로세스를 담당하는 SAP Interface Protocol이다.
+	
+	R/3 시스템에서 CALL FUNCTION 구문은 같은 시스템 내에 있는 Function Module을 호출하게 된다
+	REMOTE FUNCTION CALL(RFC)은 분산 환경에서 다른 시스템의 Function Module을 실행할 수 있도록 한다
+	
