@@ -8,7 +8,7 @@
 |2023-05-04|2-2. Maintenance View 고도화|✅|
 |2023-05-08|3. Cluster View|✅|
 |2023-05-09|4. Program ALV(1)| ✅ |
-|2023-05-10|4-2. Program ALV(2)| Today |
+|2023-05-10|4-2. Program ALV(2)| ✅ |
 |2023-05-11|4-3. Program ALV(3)| 💤 |
 |2023-05-12|5. Infotype| 💤 |
 |2023-05-15|6. Function| 💤 |
