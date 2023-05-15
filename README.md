@@ -19,4 +19,4 @@
 |Success Factor 교육일정|||
 |:------:|:---:|:---:|
 |날짜|교육내용||
-|2023-05-15|1. SF Recruiter Module|✅|
+|2023-05-15|1. SF Recruiter Module <br> job requisition|✅|
