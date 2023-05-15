@@ -20,4 +20,3 @@ Application Server와 Databas Server 간에 동기화가 진행될 때 까지 �
 버퍼링 설정(Buffering activated)을 하게 되면 버퍼링 타입을 지정해야 한다. 3가지 버퍼링 타입에 대해서 설명한다. <br><br>
 **Single record**
 테이블 레코드에 접근한 정보만 버퍼에 저장한다. Single-record 버퍼링은 Generic과 Full 버퍼링보다
-
