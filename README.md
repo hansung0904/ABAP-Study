@@ -20,3 +20,4 @@
 |:------:|:---:|:---:|
 |날짜|교육내용||
 |2023-05-15|1. SF Recruiter Module <br> job requisition|✅|
+|2023-05-16|2. Candidate Profile<br>Background Elements<br> Zones of the CPT <br> The Candidate Data Model (CDM) <br> Application Environments & Types<br> Multi-stageApplications<br> LateStageApplications<br> QuickApply <br> Pre-Screening Questions <br> Competencies <br> Interview Central & Interview Scheduling|✅|
