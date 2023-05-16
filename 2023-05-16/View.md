@@ -1,5 +1,5 @@
 # View란 무엇인가
-RDBMS에서는 여러개의 테입르이 존재하고 그 테이블들에 데이터들이 분산된 경우가 많다. <br>
+RDBMS에서는 여러개의 테이블이 존재하고 그 테이블들에 데이터들이 분산된 경우가 많다. <br>
 이러한 데이터를 한 번에 조회하고자 할 경우에 View를 사용하게 된다.<br>
 <img src = https://help.sap.com/doc/saphelp_snc70/7.0/en-US/cf/21ec5d446011d189700000e8322d00/sdic10_0_image002.gif> <br>
 
@@ -27,7 +27,7 @@ View에는 다음과 같은 4가지 종류가 있다. 책에서는 Database View
 **• Maintenace View** <br>
 
 ## 2.1 Database View
-여러 개의 테입르에서 필요한 데이터들을 추출한 View를 의미한다. <br>
+여러 개의 테이블에서 필요한 데이터들을 추출한 View를 의미한다. <br>
 View는 활성화되면 ABAP Dictionary에 의해서 사용될 수 있다. <br>
 ABAP Dictionary에 의해서 정의되고 사용되기 때문에 일반 ABAP Dictionary 테이블과 같이 OPEN SQL, NATIVE SQL,로 프로그램에서 사용해서 <br>
 데이터를 가져올 수 있다. <br>
