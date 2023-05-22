@@ -11,8 +11,8 @@
 |2023-05-10|4-2. Program ALV(2)| ✅ |
 |2023-05-11|4-3. Program ALV(3)| Project |
 |2023-05-12|5. Infotype| ✅ |
-|2023-05-15|6. Function| 💤 |
-|2023-05-16|7. ODATA| 💤 | 
+|Schedule|6. Function| 💤 |
+|Schedule|7. ODATA| 💤 | 
 
 # Success Factor 교육일정
 
