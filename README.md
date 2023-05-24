@@ -25,3 +25,4 @@
 |2023-05-18|4. Career Site Builder <br> = Career Site를 어떻게 marketing 할 것인지에 대한 내용 전반|✅|
 |2023-05-22|5. SAP Success Factors Recruiting Certification Study Start <br> Today 40 Problems.|💥|
 |2023-05-23|6. SAP Success Factors Recruiting Certification Study Start <br> Today 40 Problems. <br> THR83 Finished|💥|
+|2023-05-24|7. SAP Success Factors Recruiting Certification Study Start <br> Today 40 Problems. <br> THR84 40 Problems.|💥|
