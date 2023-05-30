@@ -17,7 +17,7 @@ ALV GRID 컨트롤에 전달되는 아웃풋 테이블에 대한 정보는 ALV G
 ALV 구조를 생성할 수 있다.<br>
 필드 카탈로그는 ALV 화면에 보이게 되는 필드들의 정보를 담는 테이블이다.<br>
 예를 들어, ALV 필드의 타입, 속성, 길이 등을 정의하게 된다.<br>
-필드 카탈로그는 LVC_T_FCAT 타입의 테이블이다.
+필드 카탈로그는 LVC_T_FCAT 타입의 테이블이다.<br>
 ![](https://raw.githubusercontent.com/hansung0904/ABAP-Study/main/EasyABAPCapture/ALV%EC%9D%98%20%EB%82%B4%EB%B6%80%EC%A0%81%EC%9D%B8%EA%B5%AC%EC%A1%B0.png)
 
 그림은 ALV가 화면에 보이기까지 내부적으로 구성되는 순서를 보여주고 있다.<br>
