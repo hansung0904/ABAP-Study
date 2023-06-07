@@ -29,3 +29,4 @@
 |2023-05-25|8. Today 42 Problems. <br> THR84 Finished|💥|
 |2023-05-31|9. THR83 Score cut 75% |💥|
 |2023-06-01|10. THR83 Score cut 85% |💥|
+|2023-06-07|11. THR83 Score cut 99% |💥|
