@@ -75,3 +75,11 @@ CALL METHOD (ref.var. to CL_GUI_ALV_GRID)->refresh_table_display
 |------|---|
 |IS_STABLE|라인과칼럼 위치를 기억하여 재조회하고 이전의 위치에 화면을 보이게 한다.|
 |I_SOFT_REFRESH|Sort, Filter, Sum 등 현 ALV GRID의 레이아웃 세팅을 그대로 유지하면서 refresh를 실행|
+
+**7) set_frontend_layout** <br>
+ALV GRID 레이아웃을 변경한다. 이 메서드를 호출하고 REFRESH_TABLE_DISPLAY 메서드를 호출하면 <br> 변경된 레이아웃이 적용된다.
+```ABAP
+CALL METHOD <ref.var. to CL_GUI_ALV_GRID>->set_frontend_layout
+    EXPORTING
+        IS_LAYOUT   =   <structure of tpye LVC_S_LAYO>.
+```
