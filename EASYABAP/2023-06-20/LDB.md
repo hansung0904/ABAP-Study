@@ -46,7 +46,7 @@ Default Value 변경 등이 필요하면 Selection Screen에 코딩을 추가할
 DB Table에서 데이터를 읽어오기 위한 SELECT 구문을 LDB 서브루틴에 추가한다.<BR>
 SELECT 후에는 PUT 구문을 사용해서 TYPE-1 프로그램에서 GET 구문으로 값을 조회할 수 있도록 지원한다.<BR>
 즉 LDB를 추가한 프로그램에서는 OPEN SQL을 사용할 필요가 없다.<BR>
-사용자가 원하는 특별한 기능들을 Subroutine에 추가할 수 있다.
+사용자가 원하는 특별한 기능들을 Subroutine에 추가할 수 있다.<br>
 ![](https://raw.githubusercontent.com/hansung0904/ABAP-Study/main/EasyABAPCapture/LDB%EA%B5%AC%EC%A1%B0.png) <br>
 
 위 그림에서 'F1S'라는 LDB는 SPFLI, SFLIGHT, SBOOK 세 개의 Table이 계층 구조로 이루어져 있다. <br>
