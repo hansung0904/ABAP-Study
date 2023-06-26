@@ -49,3 +49,24 @@ FORM xxx_pf
   pv_value1 = '3'.
   pv_value2 = '1'.
 ENDFORM.
+
+*--> value를 사용하게 되면 값이 변하지 않음.
+DATA : lv_value_test1 TYPE n VALUE 5,
+       lv_value_test2 TYPE n VALUE 5.
+
+PERFORM example_value
+  USING
+        lv_value_test1
+        lv_value_test2.
+
+WRITE :/ 'lv_value_test 1 ' , lv_value_test1,
+         'lv_value_test 2 ' , lv_value_test2.
+
+FORM example_value
+  USING
+        VALUE(pv_value1)
+        VALUE(pv_value2).
+
+  pv_value1 = '3'.
+  pv_value2 = '1'.
+ENDFORM.
