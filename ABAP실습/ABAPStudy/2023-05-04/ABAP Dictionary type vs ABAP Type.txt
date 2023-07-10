@@ -1,0 +1,53 @@
+ABAP Dictionary Type vs ABAP Type
+	ABAP의 기본 데이터 타입을 이용해서 자주 사용되는 타입은 ABAP Dictionary Type으로 생성되어져 있다.
+	개발자 입장에서 두 가지 타입은 차이 x
+	프로그램이 실행되는 과정에선 ABAP Interpreter가 자동으로 번역해주기 때문
+	
+	DATA gv_f1(10)	TYPE c.
+	DATA gvf2		TYPE char10.
+			-> 위 두 구문은 같은 타입이다.
+			
+ABAP Dictionary와 ABAP Processor Data Type의 매핑 정보
+
+ABAP Dictionary Type					ABAP Type			
+ACCP									N(6)
+CHAR n									C(n)
+CLNT									C(3)
+CUKY									C(5)
+DATS									D(8)
+FLTP									F(8)
+
+Assigning value(값 할당)
+	ABAP/4에서는 변수를 선언하거나 실제 데이터가 처리되는 구문에서 Data Object에 값을 할당할 수 있다.
+	앞에서 살펴보았듯이 변수를 선언할 때 VALUE 구문을 통하여 초기값을 정의할 수 있으며, 실제 데이터를 처리하는 프로그램 구문 내에서는 MOVE 또는
+	WRITE TO 구문을 이용해서 변수에 값을 할당하게 된다.
+	
+	<f2> = <f1>.
+	MOVE <F1> TO <F2>.
+	MOVE-CORRESSPONDING <STRING1> TO <STRING2>/
+	WRITE <f1> TO <f2> |<option>|.
+	
+⚠️	MOVE-CORRESPONDING 구문은 구조체에서 값을 할당할 때 많이 사용되며, 각 구조체의 같은 필드에 값이 복사된다.
+	만약 구조체의 필드 이름 및 순서가 다른 경우 MOVE 구문을 사용하게 되면, 필드 이름에 관계없이 순서대로 할당이 일어나므로 주의해서 사용하도록 하자
+	
+	MOVE 구문을 이용해서 형 변환(Type Conversions) -  자바에서의 casting 같은 개념
+	
+offset을 이용한 값 할당
+	Offsets and Lengths를 이용해서 필드의 일부 값을 정의할 수 있음.
+	Ex)
+		MOVE <f1> [+<p1>] [(<l1>] TO <f2> [+<p2>][(<12>)]
+			f1필드 p1에서 시작 길이 l1까지 복사 f2 필드 p2에서 길이 l2까지 할당하는 구문
+			Offsets를 지정하는 p1값은 0부터 시작. 즉 1번째 자리는 0을 의미.
+			
+			EX)
+				DATA : f1(8) VALUE 'ABCDEFGH',
+						f2(8).
+				MOVE f1+2(3) TO f2.
+				
+구조체의 산술 계산
+	MOVE-CORRESPONDING 구문을 통해서 구조체 간에 필드 값을 할당할 수 있는 것과 같이 다음 구문으로 구조체 간에 연산이 가능하다.
+	
+	ADD-CORRESPONDING
+	SUBTRACT-CORRESPONDING
+	MULTIPLY-CORRESPONDING
+	DIVIDE-CORRESPONDING
