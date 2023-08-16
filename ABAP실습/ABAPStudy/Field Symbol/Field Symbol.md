@@ -115,3 +115,118 @@ LOOP AT <ft_itab> ASSIGNING FIELD-SYMBOL(<fs_scarr>).
 ENDLOOP.
 
 ```
+
+## 필드 심볼 할당
+필드 심볼을 선언하여 프로그램 내에서 사용하려면 반드시 ASSIGN 구문을 이용해서 오브젝트를 할당하여야 한다.
+
+```ABAP
+TYPES : BEGIN OF T_LINE,
+            COL1 TYPE C,
+            COL2 TYPE C,
+        END OF T_LINE.
+
+DATA: GS_WA TYPE T_LINE,
+      GT_ITAB TYPE HASHED TABLE OF LINE WITH UNIQUE KEY COL1, KEY(4) TYPE C VALUE 'COL1'.
+
+FIELD-SYMBOS <FS> TYPE ANY TABLE.
+ASSIGN GT_ITAB TO <FS>.
+```
+
+필드 심볼에 오브젝트를 할당하려면 ASSIGN 구문을 활용한다.
+ASSIGN 구문은 크게 다음 3가지 기능으로 분류된다.
+- Assgin 구문의 기본 구조
+- 구조체 필드를 필드 심볼에 Assign
+- 필드 심볼과 Casting
+
+## Assgin 구문의 기본 구조
+Static Assign <br>
+필드명을 이미 아는 경우라면 다음 예문 이용
+
+```abap
+ASSIGN DOBJ TO <FS>.
+
+" ASSIGN이 성공하면 SY-SUBRC = 0 실패하면 SY-SUBRC = 4 를 리턴한다.
+```
+
+## Offset을 이용한 Static Assign
+필드 일부분만을 필드 심볼에 Assign을 할 경우가 있다.
+
+```ABAP
+ASSIGN DOBJ [+OFF] [(LEN)] TO <FS>.
+```
+
+ABAP 프로그램에서 위 예문의 off를 Offset이라고 하고, Len을 Length라고 부른다. <br>
+Len을 명시적으로 선언하지 않으면 ABAP은 데이터 오브젝트(dobj)의 길이와 동일하게 간주한다.<br>
+
+```abap
+DATA : STRING1(10) VALUE '0123456789'
+STRING1+5.
+```
+
+위 구문은 실제 string1+5(10)와 동일한 의미로 string1이 할당된 메모리 영역을 벗어나게 된다.<br>
+이렇게 사용해도 문제는 없지만, 필드 심볼은 Data Area를 넘어가면 에러가 발생한다.
+
+```ABAP
+WRITE / LINE-STRING1+5.
+ASSIGN LINE-STRING1+5 TO <FS>.
+```
+첫 번째 구문은 수행되나, 두 번째 구문의 필드 심볼에서는 에러가 발생하여 컴파일되지 않는다.
+
+## Assign 구문의 동적인 사용
+필드 심볼에 할당하는 필드명을 알 수 없을 경우(프로그램 내에서 동적으로 할당되는 경우)에는 동적 ASSIGN 구문을 이용한다.
+
+```abap
+ASSIGN (dobj) TO <fs>.
+```
+
+동적인 ASSIGN 구문은 아래 코드의 GV_1, GV_2, GV_3처럼 같은 패턴으로 이루어진 변수들을 한 번에 출력할 때 유용하게 사용할 수 있다. <br>
+아래 예제 코드에서는 5개의 변수를 필드 심볼에 동적으로 ASSIGN 하지만, 실무에서는 이보다 훨씬 많은 변수를 동적으로 구성하는 경우를 만날 수 있다. <br>
+그리고 뒤에서 학습하게 되는 구조체를 동적으로 출력 할 때도 자주 활용된다.
+
+```abap
+DATA : GV_1 TYPE C VALUE 'A',
+       GV_2 TYPE C VALUE 'B',
+       GV_3 TYPE C VALUE 'C',
+       GV_4 TYPE C VALUE 'D',
+       GV_5 TYPE C VALUE 'E'.
+
+DATA : GV_FNAME TYPE C LENGTH 10.
+DATA : GV_IDX TYPE N.
+
+DO 5 TIMES.
+    CLEAR : GV_FNAME.
+    GV_FNAME = 'GV_'.
+    GV_IDX = SY-INDEX.
+    CONCATENATE GV_FNAME GV_IDX INTO GV_FNAME.
+
+    ASSIGN (GV_FNAME) TO <FS>.
+
+    WRITE :/ GV_FNAME, ' : ' , <FS>.
+
+ENDDO.    
+```
+
+## 구조체의 필드를 필드 심볼에 Assign
+구조체의 개별 필드를 필드 심볼에 ASSIGN 할 수 있다. 다음 구문은 구조체 STRUC의 COMP(필드)를 <br>
+필드 심볼 <'FS'>에 할당하는 것을 보여준다.
+
+```ABAP
+ASSIGN COMPONENT comp OF STRUCTURE struc TO <fs>.
+```
+
+필드 시볼 타입을 구조체르 선언한 경우나 TYPE ANY로 선언한 경우에는 필드 심볼을 Structure 구조로 할당할 수 있다. <br>
+comp 항목에 올 수 있는 것은 line의 순번이나 컬럼명이다.
+
+## 필드 심볼과 Casting
+데이터 오브젝트를 필드 심볼에 ASSIGN 할 경우에, CAST를 이용해서 모든 데이터 타입을 필드 심볼에 Assign 할 수 있다.
+
+프로그램 용어로 CAST는 암묵적 형 변환과 명시적 형 변환 2가지로 분류되어 사용된다. <br>
+필드 심볼에서 Casting이 어떠한 역할을 하게 되는지 살펴보자.
+
+## 암묵적 형 변환(Implicit Casting)
+필드 심볼의 데이터 타입이 Fully Type으로 선언되어 있거나 기본 데이터 타입 -c, n, p, x-을 사용한 경우에 암묵적 형 변환을 사용한다. <br>
+즉, 타입이 정해진 필드 심볼과 데이터 오브젝트 타입이 다른 경우에는 CASTING 구문을 이용해서 ASSIGN 해야 한다.
+
+```ABAP
+ASSIGN <VAR> TO <FS> CASTING.
+```
