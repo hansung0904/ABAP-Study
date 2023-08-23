@@ -23,3 +23,20 @@ FORM xxx_pf
     MODIFY pt_table.
   ENDLOOP.
 ENDFORM.
+
+
+if ls_z4030-checkbox is not initial .
+  CONCATENATE i_datum(6) '01' INTO lv_datum.
+  PERFORM calc_date_interval USING lv_datum  '00'  '01'  '00'  '+'
+                          CHANGING lv_clsdt.
+
+  CONCATENATE lv_clsdt(6) lv_clsdy INTO lv_clsdt.
+
+  IF lv_clsdt < sy-datlo.
+    e_close = 'X'.
+  ELSEIF lv_clsdt = sy-datlo AND lv_clstm < sy-timlo.
+*  ELSEIF lv_clsdt = sy-datlo AND lv_clstm > sy-timlo.
+    e_close = 'X'.
+
+
+endif.
