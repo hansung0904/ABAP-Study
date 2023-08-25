@@ -25,19 +25,19 @@ PARAMETERS M_1 LIKE GT_M0324-ZGUBUN OBLIGATORY.
 SELECT-OPTIONS S_DATE FOR GT_DATA-ZDATE.
 ```
 
-![](https://raw.githubusercontent.com/hansung0904/ABAP-Study/main/EasyABAPCapture/1-1.png?token=GHSAT0AAAAAACGLEIWJWPT2XNHXDJEIRF4WZHG3Q4A)
+![](img/../../img/1-1.png)
 ```abap
 " 2. TO 가 사라짐
 SELECT-OPTIONS S_DATE FOR GT_DATA-ZDATE NO INTERVALS.
 ```
 
-![](https://raw.githubusercontent.com/hansung0904/ABAP-Study/main/EasyABAPCapture/1-2.png?token=GHSAT0AAAAAACGLEIWIQSJAIKJVTZQRRHMMZHG3RGQ)
+![](img/../../img/1-2.png)
 
 ```ABAP
 " 3. MULTIPLE이 사라짐
 SELECT-OPTIONS S_DATE FOR GT_DATA-ZDATE NO-EXTENSION.
 ```
-![](https://raw.githubusercontent.com/hansung0904/ABAP-Study/main/EasyABAPCapture/1-3.png?token=GHSAT0AAAAAACGLEIWIG3NKCCFUFS6OQ7DWZHG3RMQ)
+![](img/../../img/1-3.png)
 
 3&#46; SELECT-SCREEN
 - 시스템이 생성하는 화면을 사용자 입맛에 맞게 구서용소를 배치
