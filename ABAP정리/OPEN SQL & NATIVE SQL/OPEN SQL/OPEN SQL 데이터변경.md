@@ -211,7 +211,7 @@ gs_spfli-connid = '0001'.
 gs_spfli-cityfrom = 'Korea'.
 MODIFY spfli FROM gs_spfli.
 
-gs_spfli-carrid = 'KO 1.
+gs_spfli-carrid = 'KO'.
 gs_spfli-connid = '0001'.
 gs_spfli-cityfrom = 'Busan'.
 APPEND gs_spfli TO gt_spfli.
