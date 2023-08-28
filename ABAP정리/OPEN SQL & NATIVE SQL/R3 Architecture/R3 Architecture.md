@@ -62,5 +62,3 @@ SQL이란 Structured Query Language의 약자이다. SQL은 관계형 데이터�
 
 - Data Control Language(DCL)
   - **데이터 제어 언어** : 무결성, 보안 및 권한 제어, 회복 등을 하기 위한 언어로서 데이터를 보호하고 관리하는 목적으로 사용
-
-## 3 SQL의 종류
