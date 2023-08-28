@@ -173,3 +173,108 @@ PERFORM subr CHANGING gv_val.
 3. Actual Parameter와 같은 타입의 변수 사용 <br> FORM subr CHANGING p_val LIKE gv_val.
    
 ## 3 파라미터와 구조체
+
+Formal Parameter는 모든 ABAP Data Type이 허용되기 때문에 구조체도 당연히 사용할 수 있다. <br>
+구조체를 파라미터로 사용할 때는 TYPE, LIKE뿐만 아니라 STRUCTURE 구문을 이용해 구조체 타입을 정의할 수 있다.
+
+```abap
+FORM subr USING p_str STRUCTURE str... 
+FORM subr USING p_str type t_str...
+FORM sbur USING p_str LIKE str...
+```
+
+```abap
+REPORT Z04_06.
+
+DATA : BEING OF gs_str,
+            col1 VALUE 'A',
+            col2 VALUE 'B',
+        END OF gs_str.
+
+PERFORM write_data USING gs_str.
+
+FORM write_data USING ps_str STRUCTURE gs_str.
+    WRITE : ps_str-co1, ps_str-col2.
+ENDFORM.                                    " WRITE_DATA    
+```
+
+Z04_06 프로그램에서 구조체를 파라미터로 전달할 때 타입을 명시적으로 지정하지 않으면 어떻게 될까?
+
+```abap
+FORM write_data USING ps_str.
+    WRITE : ps_str-col1, ps_str-col2.
+ENDFORM.                "WRITE_DATA    
+```
+
+구문 점검 버튼을 선택하게 되면, 구조체에 col1 칼럼이 없다는 에러가 발생한다.<br>
+![](img/../../../img/1-11.png)
+
+이처럼 구조체를 전달할 때 타입을 지정하지 않았으면 구조체 칼럼을 WRITE 하거나 인식하려 할 때 필드 심볼을 이용해야한다.
+
+```abap
+FIELD-SYMBOLS <fs>.
+
+FORM write_data USING ps_str.
+    ASSIGN COMPONENT 1 OF STRUCTURE ps_str TO <fs>.
+    WRITE <fs>.
+
+    ASSIGN COMPONENT 2 OF STRUCTURE ps_str TO <fs>.
+    WRITE <fs>.
+
+ENDFORM.
+```
+
+## 4 파라미터와 인터널 테이블
+### 4.1 USING, CHANGING 구문
+인터널 테이블을 Subroutine의 파라미터로 사용할 때도 USING, CHANGING 키워드를 사용할 수 있다.
+```ABAP
+FORM subr CHANGING ... <itabi> [TYPE <t>|LIKE <f>] ...
+```
+
+```abap
+REPORT Z04_07.
+
+TYPES : BEGIN OF t_str,
+    COL1 TYPE c,
+    COL2 TYPE i,
+   END OF t_str.
+
+   TYPES : t_itab TYPE TABLE OF t_str.
+
+   DATA : gs_str TYPE t_str,
+          gt_itab TYPE t_itab.
+
+    gs_str-col1 = 'A'.
+    gs_str-col2 = 1.
+    APPEND gs_str TO itab.
+
+    gs_str-col1 = 'B'
+    gs_str-col2 = 2.
+    APPEND gs_str TO gt_itab.
+
+    PERFORM test_itab USING gt_itab.
+
+    FORM test_itab USING pt_itab TYPE t_itab.
+
+        READ TABLE pt_itab WITH KEY col1 = 'A' INTO gs_str.
+        IF sy-subrc = 0.
+            WRITE : gs_str-col1 , gs_str-col2.
+        ENDIF.
+    ENDFORM.                               
+```
+
+Z04_07에서 Subroutine의 파라미터 타입을 정의하는 pt_itab TYPE t_itab. 구문에서 인터널 테이블을 사용했는데,<br>
+이 구문을 TYPE ANY TABLE 구문으로 다음과 같이 변경해본다.
+
+```ABAP
+FORM test_itab  USING   pt_itab TYPE ANY TABLE.
+    READ TABLE pt_itab WITH KEY col1 = 'A' INTO gs_str.
+ENDFORM.
+```
+
+ABAP Editor의 **New Entires** 버튼을 눌러 구문 점검을 하면, READ 라인에서 아래 그림과 같은 에러가 발생한다. <br>
+이것은 FORM의 파라미터가 TYPE ANY TABLE로 정의되어서 pt_itab 인터널 테이블의 내부 구조(칼럼)를 알 수 없기 때문이다.<br>
+즉, col1이 인터널 테이블에 존재하는지 알 수 없다는 것.<BR>
+![](img/../../../img/1-12.png)
+
+TYPE ANY TABLE로 파라미터를 정의했다면 다음과 같이 READ 구문을 동적으로 변경해야 한다.
