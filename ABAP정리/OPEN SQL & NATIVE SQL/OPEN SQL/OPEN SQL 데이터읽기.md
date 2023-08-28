@@ -549,3 +549,60 @@ SELECT CARRID CONNID AVG( PAYMENTSUM ) AS PAYMENTSUM
 ENDSELECT.        
 ```
 ORDER BY 구문에서는 AVG(PAYMENTSUM)와 같은 Aggregate 함수를 사용할 수 없어서 SELECT 구문에서 as 명령어를 이용하여 'PAYMENTSUM' 이라는 Alias를 설정하였다.
+
+## 8 Subquery
+Subquery는 SELECT 구문의 WHERE 조건에 또 다른 SELECT 구문을 추가해서 값을 제한하는 목적으로 사용된다.
+
+### 8.1 Scalar Subquery
+Subquery를 이용해서 특별한 조건을 WHERE 구문에 추가할 수 있다. Subquery의 SELECT 구문에는 칼럼 하나만 선언할 수 있다.
+
+🚨TIP🚨 <br>
+**Scalar Subquery의 정의** <br>
+SELECT 절 안에 기술된 SELECT 절로 정의된다. 즉, 하나의 행으로부터 하나의 칼럼 값(또는 Aggregate 함수)만을 반환하는 <br>
+Subquery로서 JOIN 구문과 유사한 역할을 수행한다.
+
+**Scalar Subquery의 이해** <br>
+1&#41; Scalar subquery는 반드시 한 칼럼만을 반환해야 한다. <br>
+2&#41; Scalar subquery는 Nested Loop 방식으로 처리된다. <br>
+3&#41; Scalar subquery는 실행되는 횟수는 row 수이다. <br>
+4&#41; 반복되는 코드나 마스터 유형의 테이블을 조회하는 경우 사용하면 효율적이다. <br>
+
+```abap
+REPORT Z03_13.
+
+DATA : GV_CARRID            TYPE SFLIGHT-CONNID,
+       GV_CONNID            TYPE SFLIGHT-CONNID,
+       GV_PAYMENTSUM        TYPE SFLIGHT-PAYMENTSUM.
+
+SELECT SINGLE CARRID CONNID PAYMENTSUM
+        INTO (GV_CARRID, GV_CONNID, GV_PAYMENTSUM)
+        FROM SFLIGHT AS A
+        WHERE CARRID IN ( SELECT CARRID
+                            FROM SPFLI
+                            WHERE CARRID = A~CARRID
+                            AND   CONNID = A~CONNID)
+        AND A~CARRID = 'AA'.
+
+WRITE : GV_CARRID, GV_CONNID, GV_PAYMENTSUM.        
+```
+
+### 8.2 Non-scalar Subquery
+Subquery의 결과가 존재하면 TRUE를 반환하며, 존재하지 않으면 FALSE를 반환한다. EXISTS 구문을 이용해서 구현한다.
+
+```ABAP
+REPORT Z03_14.
+
+DATA :  GV_CARRID       TYPE    SFLIGHT-CARRID,
+        GV_CONNID       TYPE    SFLIGHT-CONNID,
+        GV_PAYMENTSUM   TYPE    SFLIGHT-PAYMENTSUM.
+
+SELECT SINGLE CARRID CONNID PAYMENTSUM
+    INTO (GV_CARRID, GV_CONNID, GV_PAYMENTSUM)        
+    FROM SFLIGHT AS A
+    WHERE EXISTS ( SELECT * FROM SPFLI
+                            WHERE CARRID = A~CARRID
+                            AND CONNID = A~CONNID )
+    AND A~CARRID = 'AA'.
+
+WRITE : GV_CARRID, GV_CONNID, GV_PAYMENTSUM.
+```
