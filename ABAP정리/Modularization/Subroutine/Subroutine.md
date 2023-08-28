@@ -278,3 +278,74 @@ ABAP Editor의 **New Entires** 버튼을 눌러 구문 점검을 하면, READ �
 ![](img/../../../img/1-12.png)
 
 TYPE ANY TABLE로 파라미터를 정의했다면 다음과 같이 READ 구문을 동적으로 변경해야 한다.
+
+```abap
+DATA gv_name TYPE char VALUE 'COL1'.
+
+FORM test_itab USING pt_itab TYPE ANY TABLE.
+READ TABLE pt_ita WIT KEY (gv_name) = 'A' INTO gs_str.
+ENDFORM.
+```
+
+파라미터에 사용된 인터널 테이블도 다음 3가지 방법을 사용할 수 있다. 인터널 테이블 타입은 5장에서 더 알아본다.
+- **Generic Type 사용**
+  - FORM subr CHANGING pt_itab TYPE TABLE.
+  - FORM subr CHANGING pt_itab TYPE ANY TABLE.
+  - FORM subr CHANGING pt_itab TYPE INDEX TABLE.
+  - FORM subr CHANGING pt_itab TYPE STANDARD TABLE.
+  - FORM subr CHANGING pt_itab TYPE SORTED TABLE.
+  - FORM subr CHANGING pt_itab TYPE HASHED TABLE.
+
+- **Actual Parameter와 같은 인터널 테이블 타입 사용**
+  - FORM subr CHANGING pt_val TYPE t_itab.
+  
+- **Actual Parameter와 같은 타입의 인터널 테이블 사용**
+  - FORM subr CHANGING pt_val LIKE gt_itab.
+
+### 4.2 TABLES 구문
+TABLES 구문은 Rel 3.0 이전 버전에서 사용되는 것으로 USING과 CHANGING 구문 대신에 사용이 가능하다. <BR>
+예전에 개발된 프로그램은 TABLES 구문을 사용했기 때문에 호환성 문제로 현재도 많이 사용되고 있다.
+
+```ABAP
+FORM subr TABLE ... <itabi> [TYPE <t>|LIKE <f>] ...
+```
+
+TABLES 구문을 이용해서 Formal Parameter를 정의하면 Call by Value가 지원되지 않는다.
+
+예제 4-8은 TABLES 구문을 이용해서 인터널 테이블을 Subroutine으로 전달하는 과정을 보여준다.
+```abap
+REPORT Z04_08.
+
+TYPES : BEGIN OF t_str,
+            col1 TYPE c,
+            col2 TYPE i,
+        END OF t_str.
+
+TYPES : t_itab TYPE TABLE OF t_str.
+
+DATA : gt_itab TYPE t_itab.
+
+PERFORM test_itab TABLES gt_itab.
+PERFORM write_data TABLES gt_itab.
+
+FORM test_itab TABLES pt_itab TYPE t_itab.
+    DATA ls_str TYPE t_str.
+
+    ls_str-col1 = 'A'.
+    ls_str-col2 = 1.
+    APPEND ls_str TO pt_itab.
+
+    ls_str-col1 = 'B'.
+    ls_str-col2 = 2.
+    APPEND ls_str TO pt_itab.
+
+ENDFORM.
+
+FORM write_data TABLES pt_itab LIKE gt_itab.
+    DATA ls_str TYPE t_str.
+
+    LOOP AT pt_itab INTO ls_str.
+        WRITE :/ ls_str-col1, ls_str-col2.
+    ENDLOOP.
+ENDFORM.   
+```
