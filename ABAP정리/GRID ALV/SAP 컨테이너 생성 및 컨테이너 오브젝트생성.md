@@ -26,3 +26,32 @@ ALV 프로그램은 그림15-6에 존재하는 컨테이너 컨트롤을 기반�
 
 ALV를 화면에 보여주기 위해 화면에서 영역을 지정하고, 이 영역에 ALV를 올리기 위한 작업장을 만드는 것이다. <BR>
 먼저, T-CODE:SE38을 이용해서 TYPE-1 유형의 프로그램을 생성하고 스크린 100번을 추가한다.
+
+## 2 Docking 컨테이너를 이용한 프로그램 생성
+Custom 컨테이너가 스크린에서 영역을 지정하는 반면에, Docking 컨테이너는 인스턴스를 생성할 떄 직접 스크린과 크기를 지정하게 된다. <br>
+즉, Docking이라는 단어의 의미 그대로 Custom 컨테이너를 통하지 않고, ALV가 사용될 영역과 스크린 번호를 지정해서 직접 닻을 내려서 생성하게 된다. <br>
+
+SAP 컨테이너를 결정짓는 클래스가 다르고 스크린에 영역을 지정하지 않는다는 것 외에는 Custom 컨테이너와 프로그램 사용법이 유사하다.
+
+먼저, Docking 컨테이너 클래스를 참고하는 컨테이너 객체 잠조 변수와 ALV 인스턴스를 선언한다.
+```abap
+DATA : g_docking TYPE REF TO cl_gui_docking_container,
+       g_grid    TYPE REF TO cl_gui_alv_grid.
+```
+
+CREATE OBJECT 구문으로 cl_gui_docking_container 클래스의 생성자를 호출해서 <br>
+g_docking 인스턴스를 생성한다. 앞 절에서 학습한 Custom 컨트롤에서는 스크린에 생성한 Custom 컨트롤과 연결하는 파라미터만 설정하면 되었으나, Docking 컨테이너 인스턴스를 생성할 때의 파라미터는 <br>
+프로그램 ID인 sy-repid와 스크린 번호 sy-dynnr을 할당하여야 한다.
+```abap
+CREATE OBJECT g_docking
+      EXPORTING
+          REPID = sy-repid
+          DYNNR = sy-dynnr
+          EXTENSION = 800.
+```
+CREATE OBJECT 구문을 이용해서 CL_GUI_ALV_GRID를 참고하는 ALV GRID 컨트롤 인스턴스를 생성한다. 그리고 ALV GRID 컨트롤 인스턴스를 생성하면서 Docking 컨테이너에 연결한다.
+```abap
+CREATE OBJECT g_grid
+    EXPORTING
+        i_parent = g_docking.
+```
