@@ -90,3 +90,11 @@ DATA : BEING OF GS_WA,
 * 3. 인터널 테이블 선언
 DATA : GT_WA LIKE TABLE OF SCARR.
 ```
+
+## READ
+READ 구문을 사용할 땐 항상 데이터를 불러오고 나서 CLEAR를 해주어야 한다. <br>
+CLEAR를 해주지 않으면 다른 값이 들어갈 수도 있다. <br>
+습관적으로 CLEAR를 해주도록 하자.
+
+또한 SORT를 하지않고 BINARY SEARCH를 사용하게되면 데이터 정렬 순서가 꼬이게 된다. <BR>
+BINARY SEARCH를 사용할때는 항상 SORT를 해준후에 수행하도록 한다.
