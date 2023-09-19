@@ -44,3 +44,19 @@ Program SAPL<"fgrp">는 다음의 INCLUDE 프로그램을 포함하게 된다.
 
 - L<"fgrp">TOP. : FUNCTION-POOL 구문을 포함하고 있다. Function Group 전체에 사용할 수 있는 전역 변수를 선언한다.
 - L<"fgrp">UXX. : Include 프로그램 L<"frgrp">U01, L<"frgrp">U02와 같이 기술한다. 이것은 실제 Function Module을 포함하고 있다.
+
+# 7가지의 탭
+## Attribute - 속성
+Attribute에서 가장 중요한 세팅은 Processing Type을 설정하는 것 <br>
+이곳에서 내가 만들 Function Module을 *Normal Function Module, Remoted-Enabled Module, Update Module* 중 어떤 것으로 만들지를 설정할 수 있다. <br>
+디폴트로는 Normal Function Module로 설정되어 있다.
+
+ *Normal Function Module*은 SAP 시스템 안의 어떠한 ABAP 프로그램에서 호출이 가능하다. <br>
+ *Remote-enabled Function* Module은 내부 뿐만 아니라 외부(remote system)에서도 호출이 가능하다. <br>
+ 이러한 종류의 함수 유형은 SAP 시스템 간의 상호작용 혹은 SAP 시스템과 외부 시스템과의 상호작용에도 도움을 준다.<br>
+ Update Modules는 updating 동안 사용한다.
+
+ 가장 많이 사용하는 것이 Normal Function Module, Remote-enabled Function Module이며 두 가지의 차이점은 외부에서 호출되어 사용될 수 있냐의 유무이다. <br>
+ 개발자적인 관점에서 호출뿐만 아니라 두 유형의 차이점에는 Pass Value를 파라미터 설정 단계에서 클릭해줘야하는지의 차이도 있다.
+
+ ## Import
