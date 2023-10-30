@@ -1,0 +1,135 @@
+Operations without header line
+
+Operations with header line
+
+Operations for all Table Types
+
+INSERT <wa> INTO TABLE <itab>.
+
+INSERT TABLE ITAB.
+
+COLLECT <wa> INTO <itab>.
+
+COLLECT <itab>.
+
+READ TABLE <itab> ... INTO <wa>.
+
+READ TABLE <itab> ...
+
+MODIFY TABLE <itab> FROM <wa> ...
+
+MODIFY TABLE <itab> ...
+
+MODIFY <itab> FROM <wa> ...WHERE ...
+
+MODIFY <itab> ... WHERE ...
+
+DELETE TABLE <itab> FROM <wa>.
+
+DELETE TABLE <itab>.
+
+LOOP AT ITAB INTO <wa> ...
+
+LOOP AT ITAB ...
+
+Operations for Index Tables
+
+APPEND <wa> TO <itab>.
+
+APPEND <itab>.
+
+INSERT <wa> INTO <itab> ...
+
+INSERT <itab> ...
+
+MODIFY <itab> FROM <wa> ...
+
+MODIFY <itab> ...
+
+Using the header line as a work area means that you can use shorter statements; however, they are not necessarily easier to understand, since you cannot immediately recognize the origin and target of the assignment. Furthermore, the fact that the table and its header line have the same name can cause confusion in operations with entire internal tables. To avoid confusion, you should use internal tables with differently-named work areas.
+
+The following example shows two programs with the same function. One uses a header line, the other does not.
+
+With header line:
+
+TYPES: BEGIN OF LINE,
+
+COL1 TYPE I,
+
+COL2 TYPE I,
+
+END OF LINE.
+
+DATA ITAB TYPE HASHED TABLE OF LINE WITH UNIQUE KEY COL1
+
+WITH HEADER LINE.
+
+DO 4 TIMES.
+
+ITAB-COL1 = SY-INDEX.
+
+ITAB-COL2 = SY-INDEX ** 2.
+
+INSERT TABLE ITAB.
+
+ENDDO.
+
+ITAB-COL1 = 2.
+
+READ TABLE ITAB FROM ITAB.
+
+ITAB-COL2 = 100.
+
+MODIFY TABLE ITAB.
+
+ITAB-COL1 = 4.
+
+DELETE TABLE ITAB.
+
+LOOP AT ITAB.
+
+WRITE: / ITAB-COL1, ITAB-COL2.
+
+ENDLOOP.
+
+Without header line:
+
+TYPES: BEGIN OF LINE,
+
+COL1 TYPE I,
+
+COL2 TYPE I,
+
+END OF LINE.
+
+DATA: ITAB TYPE HASHED TABLE OF LINE WITH UNIQUE KEY COL1,
+
+WA LIKE LINE OF ITAB.
+
+DO 4 TIMES.
+
+WA-COL1 = SY-INDEX.
+
+WA-COL2 = SY-INDEX ** 2.
+
+INSERT WA INTO TABLE ITAB.
+
+ENDDO.
+
+WA-COL1 = 2.
+
+READ TABLE ITAB FROM WA INTO WA.
+
+WA-COL2 = 100.
+
+MODIFY TABLE ITAB FROM WA.
+
+WA-COL1 = 4.
+
+DELETE TABLE ITAB FROM WA.
+
+LOOP AT ITAB INTO WA.
+
+WRITE: / WA-COL1, WA-COL2.
+
+ENDLOOP.
