@@ -307,3 +307,6 @@ DATA : lt_text TYPE TABLE OF tline WITH HEADER LINE,
                       AND endda = zhrv4000-endda.
   ENDCASE.
 ```
+
+## 구현화면
+![](/ABAP정리/img/view_push_button_result.png) <br>
